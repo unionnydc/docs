@@ -1,4 +1,6 @@
-# CONTENTS:
+# Ubuntu 14.04 web server
+
+### CONTENTS:
 - [add non-root-user](#add-non-root-user)
 - [rename server](#rename-server)
 - [authorize personal ssh key](#authorize-personal-ssh-key)
@@ -7,14 +9,14 @@
 - [add local ssh config](#add-local-ssh-config)
 - [configure .bashrc](#configure-bashrc)
 - [update ubuntu](#update-ubuntu)
+- [install postgres](#install-postgres)
 - [install rvm](#install-rvm)
-- [install git, nginx, redis](#install-git-nginx-redis)
+- [install git](#install-git)
+- [install nginx](#install-nginx)
+- [install redis](#install-redis)
 
 ### TODO:
-- git config
-- postgresql
 - install unicorn
-- configure git
 - nginx.conf and default site conf
 - logrotate
 - remote backups with backup gem
@@ -22,19 +24,19 @@
 ## add non-root user
 ```bash
 # if no non-root user, add one
-$ adduser sean
-$ usermod -a -G sudo sean
+$ adduser webdev
+$ usermod -a -G sudo webdev
 ```
 
 ## rename server:
 ```bash
 $ sudo vim /etc/hostname
-# cyclone
+# my-server-nickname
 
 $ sudo vim /etc/hosts
-# 127.0.1.1 cyclone
+# 127.0.1.1 my-server-nickname
 
-$ sudo hostname cyclone
+$ sudo hostname my-server-nickname
 ```
 
 ## authorize personal ssh key
@@ -108,6 +110,20 @@ $ sudo apt-get update
 $ sudo aptitude safe-upgrade
 ```
 
+## install postgres
+```bash
+# postgresql-contrib includes additional modules
+# e.g., hstore, fuzzystrmatch, pg_trgm
+$ sudo apt-get install postgresql postgresql-contrib
+
+# [optional] create database:
+$ sudo -u postgres createdb my-database-name
+# load my-database-name into psql:
+$ sudo -u postgres psql my-database-name
+# to add a password type: \password
+# then quit with: \q
+```
+
 ## install rvm
 ```bash
 $ gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
@@ -121,7 +137,25 @@ $ rvm install 2.2.0 # give password to allow sudo installs
 $ rvm use 2.2.0 --default
 ```
 
-## install git, nginx, redis
+## install git
 ```bash
-$ sudo apt-get install git nginx redis-server
+$ sudo apt-get install git
+$ git config --global user.name "WebDev User"
+$ git config --global user.email webdev@my-server-nickname
+```
+
+## install nginx
+```bash
+$ sudo apt-get install nginx
+# TODO: tweak nginx.conf and default site conf
+```
+
+## install redis
+```bash
+$ sudo apt-get install redis-server
+# check it out:
+$ redis-cli
+# 127.0.0.1:6379> ping
+# PONG
+# quit by typing: quit
 ```
