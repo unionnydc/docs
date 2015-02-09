@@ -45,7 +45,7 @@ $ cat ~/.ssh/id_rsa.pub | pbcopy
 # remote:
 $ cd ~/.ssh
 $ cat >> authorized_keys
-# paste public key + ctrl+d
+# paste public key then ctrl+d
 $ chmod 600 authorized_keys
 ```
 
@@ -69,7 +69,7 @@ $ sudo /sbin/iptables-restore < /etc/iptables.firewall.rules
 
 # apply firewall rules on reboot
 $ wget http://j.mp/1zY4Pi1 -O firewall
-# double check download, then:
+# double check downloaded file, then:
 $ sudo cp firewall -O /etc/network/if-pre-up.d/firewall
 $ sudo chmod +x /etc/network/if-pre-up.d/firewall
 ```
@@ -86,7 +86,7 @@ $ vim ~/.ssh/config
 # remote:
 $ sudo service ssh restart
 
-# IMPORTANT: make sure you can login!
+# IMPORTANT: make sure you can login before existing remote shell!
 # local:
 $ ssh nickname # from ~/.ssh/config host
 ```
