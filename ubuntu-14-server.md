@@ -2,6 +2,8 @@
 
 ### CONTENTS:
 - [add non-root-user](#add-non-root-user)
+- [install git](#install-git)
+- [clone unrealgrp-docs](#clone-unrealgrp-docs)
 - [rename server](#rename-server)
 - [authorize personal ssh key](#authorize-personal-ssh-key)
 - [harden ssh](#harden-ssh)
@@ -11,7 +13,6 @@
 - [update ubuntu](#update-ubuntu)
 - [install postgres](#install-postgres)
 - [install rvm](#install-rvm)
-- [install git](#install-git)
 - [install nginx](#install-nginx)
 - [install redis](#install-redis)
 
@@ -26,6 +27,18 @@
 # if no non-root user, add one
 $ adduser webdev
 $ usermod -a -G sudo webdev
+```
+
+## install git
+```bash
+$ sudo apt-get install git
+$ git config --global user.name "WebDev User"
+$ git config --global user.email webdev@my-server-nickname
+```
+
+## clone unrealgrp-docs
+```bash
+$ git clone git@github.com:Unreal-Group/unrealgrp-docs.git
 ```
 
 ## rename server:
@@ -53,25 +66,25 @@ $ chmod 600 authorized_keys
 
 ## harden ssh
 ```bash
+# NOTE: aws ec2 defaults are probably fine
 $ sudo cp /etc/ssh/sshd_config /etc/ssh/sshd_config.pristine
 $ sudo vim /etc/ssh/sshd_config
-# Port 30000 # change to custom port
 # Protocol 2
-# PermitRootLogin no
+# PermitRootLogin without-password
+# # Port 30000 # consider change to custom port
 # # AllowUsers sean # CAREFUL
 ```
 
 ## setup firewall
 ```bash
-# download and activate firewall rules
-$ wget http://j.mp/16sESJI -O iptables.firewall.rules
-# double check downloaded file, then:
+# activate firewall rules
+$ cd ~/unrealgrp-docs/support
+# review iptables.firewall.rules, then:
 $ sudo cp iptables.firewall.rules /etc/iptables.firewall.rules
 $ sudo /sbin/iptables-restore < /etc/iptables.firewall.rules
 
 # apply firewall rules on reboot
-$ wget http://j.mp/1zY4Pi1 -O firewall
-# double check downloaded file, then:
+# review firewall, then:
 $ sudo cp firewall /etc/network/if-pre-up.d/firewall
 $ sudo chmod +x /etc/network/if-pre-up.d/firewall
 ```
@@ -83,7 +96,7 @@ $ vim ~/.ssh/config
 # Host nickname
 # Hostname ip-address
 # User sean
-# Port 30000 # custom port from remote sshd_config
+## Port 30000 # custom port from remote sshd_config
 
 # remote:
 $ sudo service ssh restart
@@ -95,13 +108,12 @@ $ ssh nickname # from ~/.ssh/config host
 
 ## configure .bashrc
 ```bash
-$ cp .bashrc .bashrc.pristine
-$ wget http://j.mp/1zY6y77 -O .git-prompt.sh
-$ wget http://j.mp/1C2RwrQ -O bashrc-gist
-# double check downloaded file, then:
-$ cat bashrc-gist >> .bashrc
-$ source .bashrc
-$ rm bashrc-gist
+$ cd && cp .bashrc .bashrc.pristine
+$ cd ~/unrealgrp-docs/support
+$ cp .git-prompt.sh ~/.
+# double check .bashrc-append, then:
+$ cat .bashrc-append >> ~/.bashrc
+$ cd && source .bashrc
 ```
 
 ## update ubuntu
@@ -126,7 +138,7 @@ $ sudo -u postgres psql my-database-name
 
 ## install rvm
 ```bash
-$ gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
+$ cd && gpg --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 $ \curl -sSL https://get.rvm.io | bash
 $ source ~/.rvm/scripts/rvm
 $ echo "source ~/.rvm/scripts/rvm" >> ~/.bashrc
@@ -135,13 +147,6 @@ $ rvm list known
 # consider latest stable ruby
 $ rvm install 2.2.0 # give password to allow sudo installs
 $ rvm use 2.2.0 --default
-```
-
-## install git
-```bash
-$ sudo apt-get install git
-$ git config --global user.name "WebDev User"
-$ git config --global user.email webdev@my-server-nickname
 ```
 
 ## install nginx

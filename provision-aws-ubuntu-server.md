@@ -35,6 +35,36 @@
 - click `Launch`
 
 ### Select an existing key pair or create a new key pair
-- if this is first ec2 instance, `Create a new key pair`, give it a descriptive name
+- if this is first ec2 instance, `Create a new key pair`, name it after server nickname, download to your local ~/.ssh/ folder
 - otherwise `Choose an existing key pair`
 - click `Launch Instance`
+
+### Name this instance
+- go back to [ec2 dashboard](https://console.aws.amazon.com/ec2)
+- in `Name` column click and give descriptive name, e.g, "nickname-stage"
+
+### SSH into EC2
+```bash
+# local machine:
+# add ssh config:
+$ vim ~/.ssh/config
+# Host nickname-env
+# Hostname ip-address
+# User ubuntu
+# IdentityFile ~/.ssh/nickname.pem
+## Port 30000 # if a custom port was specified in step 6
+
+# copy public key, ssh into ec2
+$ cat ~/.ssh/id_rsa.pub | pbcopy
+$ ssh nickname-env
+
+# remote machine:
+# add public key to authorized_keys
+$ cd ~/.ssh
+$ cat >> authorized_keys
+# paste public key then ctrl+d
+
+# you can comment out "IdentityFile" line in your local
+# ~/.ssh/config now if you prefer, since your default
+# public key is now authorized on remote machine
+```
