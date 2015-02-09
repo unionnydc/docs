@@ -72,7 +72,7 @@ $ sudo /sbin/iptables-restore < /etc/iptables.firewall.rules
 # apply firewall rules on reboot
 $ wget http://j.mp/1zY4Pi1 -O firewall
 # double check downloaded file, then:
-$ sudo cp firewall -O /etc/network/if-pre-up.d/firewall
+$ sudo cp firewall /etc/network/if-pre-up.d/firewall
 $ sudo chmod +x /etc/network/if-pre-up.d/firewall
 ```
 

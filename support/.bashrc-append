@@ -1,0 +1,9 @@
+
+# aliases
+# alias web='cd /var/www/app/current'
+
+# git branch in prompt
+source ~/.git-prompt.sh
+
+# custom prompt
+PS1="⤷ \[\033[0;35m\]\u@\h\[\033[0;33m\] \w\[\033[00m\]\$(__git_ps1 \" (%s)\") "
