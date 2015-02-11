@@ -17,6 +17,7 @@
 - [install redis](#install-redis)
 
 ### TODO:
+- papertrail
 - install unicorn
 - nginx.conf and default site conf
 - logrotate
