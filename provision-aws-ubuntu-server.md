@@ -27,6 +27,7 @@
 ### Step 6: Configure Security Group
 - if this is first ec2 instance, add `Security group name` and `Description`
 - if not first ec2 instance, `Select an existing security group`, unless config is unique
+- IMPORTANT: add rules for HTTP and HTTPS ports (defaults are fine)
 - consider changing `Port Range` for `SSH` to a custom port
 - click `Review and Launch`
 
